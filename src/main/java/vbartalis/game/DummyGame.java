@@ -1,8 +1,10 @@
 package vbartalis.game;
 
+import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.lwjgl.system.MathUtil;
 import vbartalis.engine.*;
 import vbartalis.engine.graph.Camera;
 import vbartalis.engine.graph.Mesh;
@@ -55,25 +57,54 @@ public class DummyGame implements IGameLogic {
 
         scene = new Scene();
 
-        Mesh[] houseMesh = StaticMeshesLoader.load("models/house/house.obj", "models/house");
-        GameItem house = new GameItem(houseMesh);
+//        Mesh[] houseMesh = StaticMeshesLoader.load("models/house/house.obj", "models/house");
+//        GameItem house = new GameItem(houseMesh);
+
+        Mesh[] cubeRockMesh1 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
+        GameItem cubeRock1 = new GameItem(cubeRockMesh1);
+
+        Mesh[] cubeRockMesh2 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
+        GameItem cubeRock2 = new GameItem(cubeRockMesh2);
+        cubeRock2.setPosition( 10.0f, 10.0f, 0.0f);
+
+        Mesh[] cubeRockMesh3 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
+        GameItem cubeRock3 = new GameItem(cubeRockMesh3);
+        cubeRock3.setPosition( 0.0f, 5.0f, 5.0f);
+
+
+        Quaternionf cubeRotation = new Quaternionf();
+        cubeRotation.x = 0f;
+        cubeRotation.y = 0f;
+        cubeRotation.z = 0f;
+        cubeRotation.w = 1f;
+
+        Vector3f rotationXYZ = new Vector3f(0,45,0);
+        rotationXYZ.x = rotationXYZ.x % 360.0f;
+        rotationXYZ.y = rotationXYZ.y % 360.0f;
+        rotationXYZ.z = rotationXYZ.z % 360.0f;
+
+        cubeRotation.rotateXYZ( (float) Math.toRadians(rotationXYZ.x), (float) Math.toRadians(rotationXYZ.y), (float) Math.toRadians(rotationXYZ.z));
+        cubeRock3.setRotation(cubeRotation);
+
+
 
         Mesh[] terrainMesh = StaticMeshesLoader.load("models/terrain/terrain.obj", "models/terrain");
         GameItem terrain = new GameItem(terrainMesh);
         terrain.setScale(100.0f);
 
-        scene.setGameItems(new GameItem[]{house, terrain});
+        scene.setGameItems(new GameItem[]{cubeRock1, cubeRock2, cubeRock3, terrain});
 
         // Shadows
         scene.setRenderShadows(true);
 
         // Fog
-        Vector3f fogColour = new Vector3f(0.5f, 0.5f, 0.5f);
-        scene.setFog(new Fog(true, fogColour, 0.02f));
+//        Vector3f fogColour = new Vector3f(0.5f, 0.5f, 0.5f);
+//        scene.setFog(new Fog(true, fogColour, 0.02f));
 
         // Setup  SkyBox
         float skyBoxScale = 100.0f;
-        SkyBox skyBox = new SkyBox("models/skybox.obj", new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
+//        SkyBox skyBox = new SkyBox("models/skybox.obj", new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
+        SkyBox skyBox = new SkyBox("models/skybox.obj", "textures/skybox.png");
         skyBox.setScale(skyBoxScale);
         scene.setSkyBox(skyBox);
 
@@ -102,7 +133,8 @@ public class DummyGame implements IGameLogic {
         sceneLight.setDirectionalLight(directionalLight);
 
         pointLightPos = new Vector3f(0.0f, 25.0f, 0.0f);
-        Vector3f pointLightColour = new Vector3f(0.0f, 1.0f, 0.0f);
+//        Vector3f pointLightColour = new Vector3f(0.0f, 1.0f, 0.0f);
+        Vector3f pointLightColour = new Vector3f(1.0f, 1.0f, 1.0f);
         PointLight.Attenuation attenuation = new PointLight.Attenuation(1, 0.0f, 0);
         PointLight pointLight = new PointLight(pointLightColour, pointLightPos, lightIntensity, attenuation);
         sceneLight.setPointLightList( new PointLight[] {pointLight});
