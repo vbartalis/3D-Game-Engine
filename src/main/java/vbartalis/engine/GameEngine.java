@@ -1,5 +1,8 @@
 package vbartalis.engine;
 
+import vbartalis.engine.input.KeyboardInput;
+import vbartalis.engine.input.MouseInput;
+
 public class GameEngine implements Runnable {
 
     public static final int TARGET_FPS = 75;
@@ -12,7 +15,8 @@ public class GameEngine implements Runnable {
 
     private final IGameLogic gameLogic;
 
-    private final MouseInput mouseInput;
+    private final vbartalis.engine.input.MouseInput mouseInput;
+    private final KeyboardInput keyboardInput;
 
     private double lastFps;
     
@@ -28,6 +32,7 @@ public class GameEngine implements Runnable {
         this.windowTitle = windowTitle;
         window = new Window(windowTitle, width, height, vSync, opts);
         mouseInput = new MouseInput();
+        keyboardInput = new KeyboardInput();
         this.gameLogic = gameLogic;
         timer = new Timer();
     }
@@ -48,6 +53,7 @@ public class GameEngine implements Runnable {
         window.init();
         timer.init();
         mouseInput.init(window);
+        keyboardInput.init(window.getWindowHandle());
         gameLogic.init(window);
         lastFps = timer.getTime();
         fps = 0;
@@ -94,8 +100,10 @@ public class GameEngine implements Runnable {
     }
 
     protected void input() {
-        mouseInput.input(window);
-        gameLogic.input(window, mouseInput);
+//        mouseInput.input(window);
+        gameLogic.input(window, mouseInput, keyboardInput);
+        keyboardInput.update();
+        mouseInput.update();
     }
 
     protected void update(float interval) {

@@ -12,6 +12,8 @@ import vbartalis.engine.graph.Renderer;
 import vbartalis.engine.graph.lights.DirectionalLight;
 import vbartalis.engine.graph.lights.PointLight;
 import vbartalis.engine.graph.weather.Fog;
+import vbartalis.engine.input.KeyboardInput;
+import vbartalis.engine.input.MouseInput;
 import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SkyBox;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
@@ -23,6 +25,7 @@ public class DummyGame implements IGameLogic {
     private static final float MOUSE_SENSITIVITY = 0.2f;
 
     private final Vector3f cameraInc;
+    private final Vector3f cameraRot;
 
     private final Renderer renderer;
 
@@ -46,6 +49,7 @@ public class DummyGame implements IGameLogic {
         renderer = new Renderer();
         camera = new Camera();
         cameraInc = new Vector3f(0.0f, 0.0f, 0.0f);
+        cameraRot = new Vector3f(0.0f, 0.0f, 0.0f);
         angleInc = 0;
         lightAngle = 90;
         firstTime = true;
@@ -54,6 +58,8 @@ public class DummyGame implements IGameLogic {
     @Override
     public void init(Window window) throws Exception {
         renderer.init(window);
+
+
 
         scene = new Scene();
 
@@ -114,7 +120,8 @@ public class DummyGame implements IGameLogic {
         camera.getPosition().x = -17.0f;
         camera.getPosition().y =  17.0f;
         camera.getPosition().z = -30.0f;
-        camera.getRotation().x = 20.0f;
+//        camera.getRotation().x = 20.0f;
+        camera.getRotation().x = 45.0f;
         camera.getRotation().y = 140.f;
     }
 
@@ -141,56 +148,102 @@ public class DummyGame implements IGameLogic {
     }
 
     @Override
-    public void input(Window window, MouseInput mouseInput) {
+    public void input(Window window, MouseInput mouseInput, KeyboardInput keyboardInput) {
         sceneChanged = false;
         cameraInc.set(0, 0, 0);
-        if (window.isKeyPressed(GLFW_KEY_W)) {
+        cameraRot.set(0, 0, 0);
+
+        //----KEYBOARD----//
+
+        //move forward W/backward S
+        if (keyboardInput.isKeyDown(GLFW_KEY_W)) {
             sceneChanged = true;
             cameraInc.z = -1;
-        } else if (window.isKeyPressed(GLFW_KEY_S)) {
+        } else if (keyboardInput.isKeyDown(GLFW_KEY_S)) {
             sceneChanged = true;
             cameraInc.z = 1;
         }
-        if (window.isKeyPressed(GLFW_KEY_A)) {
+        //move left A/right D
+        if (keyboardInput.isKeyDown(GLFW_KEY_A)) {
             sceneChanged = true;
             cameraInc.x = -1;
-        } else if (window.isKeyPressed(GLFW_KEY_D)) {
+        } else if (keyboardInput.isKeyDown(GLFW_KEY_D)) {
             sceneChanged = true;
             cameraInc.x = 1;
         }
-        if (window.isKeyPressed(GLFW_KEY_Z)) {
+        //move down Z/up X
+        if (keyboardInput.isKeyDown(GLFW_KEY_Z)) {
             sceneChanged = true;
             cameraInc.y = -1;
-        } else if (window.isKeyPressed(GLFW_KEY_X)) {
+        } else if (keyboardInput.isKeyDown(GLFW_KEY_X)) {
             sceneChanged = true;
             cameraInc.y = 1;
         }
-        if (window.isKeyPressed(GLFW_KEY_LEFT)) {
+
+        //rotate camera
+        if (keyboardInput.isKeyDown(GLFW_KEY_Q)) {
+            sceneChanged = true;
+            cameraRot.y = -1;
+        } else if (keyboardInput.isKeyDown(GLFW_KEY_E)) {
+            sceneChanged = true;
+            cameraRot.y = 1;
+        }
+
+
+        //move directional light
+        if (keyboardInput.isKeyDown(GLFW_KEY_LEFT)) {
             sceneChanged = true;
             angleInc -= 0.05f;
-        } else if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
+        } else if (keyboardInput.isKeyDown(GLFW_KEY_RIGHT)) {
             sceneChanged = true;
             angleInc += 0.05f;
         } else {
             angleInc = 0;
         }
-        if (window.isKeyPressed(GLFW_KEY_UP)) {
+        //point light closer/farther
+        if (keyboardInput.isKeyDown(GLFW_KEY_UP)) {
             sceneChanged = true;
             pointLightPos.y += 0.5f;
-        } else if (window.isKeyPressed(GLFW_KEY_DOWN)) {
+        } else if (keyboardInput.isKeyDown(GLFW_KEY_DOWN)) {
             sceneChanged = true;
             pointLightPos.y -= 0.5f;
         }
+
+        //Quit
+        if (keyboardInput.isKeyReleased(GLFW_KEY_ESCAPE)) {
+            glfwSetWindowShouldClose(window.getWindowHandle(), true);
+        }
+
+        //----MOUSE----//
+
+        if (mouseInput.getScroll() != 0) {
+            if (mouseInput.getScroll() > 0) {
+                sceneChanged = true;
+                cameraInc.y = -1;
+            } else if (mouseInput.getScroll() < 0) {
+                sceneChanged = true;
+                cameraInc.y = 1;
+            }
+        }
+
+        if (mouseInput.isButtonDown(GLFW_MOUSE_BUTTON_MIDDLE)) {
+            cameraInc.x = mouseInput.getDeltaPosition().x;
+            cameraInc.y = mouseInput.getDeltaPosition().y;
+        }
+
     }
 
     @Override
-    public void update(float interval, MouseInput mouseInput, Window window) {
-        if (mouseInput.isRightButtonPressed()) {
-            // Update camera based on mouse            
-            Vector2f rotVec = mouseInput.getDisplVec();
-            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
-            sceneChanged = true;
-        }
+    public void update(float interval, vbartalis.engine.input.MouseInput mouseInput, Window window) {
+//        if (mouseInput.isRightButtonPressed()) {
+//            // Update camera based on mouse
+//            Vector2f rotVec = mouseInput.getDisplVec();
+//            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
+//            sceneChanged = true;
+//        }
+
+
+        camera.moveRotation(cameraRot.x, cameraRot.y, cameraRot.z);
 
         // Update camera position
         camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
