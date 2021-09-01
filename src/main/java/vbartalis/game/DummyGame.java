@@ -1,5 +1,6 @@
 package vbartalis.game;
 
+import lombok.extern.slf4j.Slf4j;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -20,9 +21,11 @@ import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+@Slf4j
 public class DummyGame implements IGameLogic {
 
     private static final float MOUSE_SENSITIVITY = 0.2f;
+    private static final float DRAG_MOUSE_SENSITIVITY = 0.1f;
 
     private final Vector3f cameraInc;
     private final Vector3f cameraRot;
@@ -228,7 +231,8 @@ public class DummyGame implements IGameLogic {
 
         if (mouseInput.isButtonDown(GLFW_MOUSE_BUTTON_MIDDLE)) {
             cameraInc.x = mouseInput.getDeltaPosition().x;
-            cameraInc.y = mouseInput.getDeltaPosition().y;
+            cameraInc.z = mouseInput.getDeltaPosition().y;
+            cameraInc.mul(-DRAG_MOUSE_SENSITIVITY);
         }
 
     }
@@ -242,7 +246,7 @@ public class DummyGame implements IGameLogic {
 //            sceneChanged = true;
 //        }
 
-
+        // Update camera rotation
         camera.moveRotation(cameraRot.x, cameraRot.y, cameraRot.z);
 
         // Update camera position

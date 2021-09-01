@@ -1,6 +1,7 @@
 package vbartalis.engine.input;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector2f;
 import vbartalis.engine.Window;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+@Slf4j
 public class MouseInput {
 
     private Set<Integer> buttonsDown = new HashSet<>();
@@ -96,6 +98,7 @@ public class MouseInput {
         deltaPosition.x = currentPosition.x - lastPosition.x;
         deltaPosition.y = currentPosition.y - lastPosition.y;
 //        deltaPosition = currentPosition.sub(lastPosition);
-        lastPosition = currentPosition;
+        lastPosition.set(currentPosition);
+
     }
 }
