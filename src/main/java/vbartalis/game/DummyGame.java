@@ -97,9 +97,11 @@ public class DummyGame implements IGameLogic {
 
 
 
-        Mesh[] terrainMesh = StaticMeshesLoader.load("models/terrain/terrain.obj", "models/terrain");
+//        Mesh[] terrainMesh = StaticMeshesLoader.load("models/terrain/terrain.obj", "models/terrain");
+        Mesh[] terrainMesh = StaticMeshesLoader.load("models/myterrain/MyTerrain2.obj", "models/myterrain");
         GameItem terrain = new GameItem(terrainMesh);
-        terrain.setScale(100.0f);
+//        terrain.setScale(100.0f);
+        terrain.setScale(10.0f);
 
         scene.setGameItems(new GameItem[]{cubeRock1, cubeRock2, cubeRock3, terrain});
 
@@ -111,11 +113,11 @@ public class DummyGame implements IGameLogic {
 //        scene.setFog(new Fog(true, fogColour, 0.02f));
 
         // Setup  SkyBox
-        float skyBoxScale = 100.0f;
+//        float skyBoxScale = 100.0f;
 //        SkyBox skyBox = new SkyBox("models/skybox.obj", new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
-        SkyBox skyBox = new SkyBox("models/skybox.obj", "textures/skybox.png");
-        skyBox.setScale(skyBoxScale);
-        scene.setSkyBox(skyBox);
+//        SkyBox skyBox = new SkyBox("models/skybox.obj", "textures/skybox.png");
+//        skyBox.setScale(skyBoxScale);
+//        scene.setSkyBox(skyBox);
 
         // Setup Lights
         setupLights();
