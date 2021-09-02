@@ -18,6 +18,7 @@ import vbartalis.engine.input.MouseInput;
 import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SkyBox;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
+import vbartalis.game.input.InputService;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -27,8 +28,8 @@ public class DummyGame implements IGameLogic {
     private static final float MOUSE_SENSITIVITY = 0.2f;
     private static final float DRAG_MOUSE_SENSITIVITY = 0.1f;
 
-    private final Vector3f cameraInc;
-    private final Vector3f cameraRot;
+//    private final Vector3f cameraInc;
+//    private final Vector3f cameraRot;
 
     private final Renderer renderer;
 
@@ -38,7 +39,7 @@ public class DummyGame implements IGameLogic {
 
     private static final float CAMERA_POS_STEP = 0.40f;
 
-    private float angleInc;
+//    private float angleInc;
 
     private float lightAngle;
 
@@ -48,12 +49,13 @@ public class DummyGame implements IGameLogic {
 
     private Vector3f pointLightPos;
 
+    private final InputService inputService;
+
     public DummyGame() {
         renderer = new Renderer();
         camera = new Camera();
-        cameraInc = new Vector3f(0.0f, 0.0f, 0.0f);
-        cameraRot = new Vector3f(0.0f, 0.0f, 0.0f);
-        angleInc = 0;
+        inputService = new InputService();
+
         lightAngle = 90;
         firstTime = true;
     }
@@ -61,7 +63,6 @@ public class DummyGame implements IGameLogic {
     @Override
     public void init(Window window) throws Exception {
         renderer.init(window);
-
 
 
         scene = new Scene();
@@ -74,11 +75,11 @@ public class DummyGame implements IGameLogic {
 
         Mesh[] cubeRockMesh2 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
         GameItem cubeRock2 = new GameItem(cubeRockMesh2);
-        cubeRock2.setPosition( 10.0f, 10.0f, 0.0f);
+        cubeRock2.setPosition(10.0f, 10.0f, 0.0f);
 
         Mesh[] cubeRockMesh3 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
         GameItem cubeRock3 = new GameItem(cubeRockMesh3);
-        cubeRock3.setPosition( 0.0f, 5.0f, 5.0f);
+        cubeRock3.setPosition(0.0f, 5.0f, 5.0f);
 
 
         Quaternionf cubeRotation = new Quaternionf();
@@ -87,12 +88,14 @@ public class DummyGame implements IGameLogic {
         cubeRotation.z = 0f;
         cubeRotation.w = 1f;
 
-        Vector3f rotationXYZ = new Vector3f(0,45,0);
+        Vector3f rotationXYZ = new Vector3f(0, 45, 0);
         rotationXYZ.x = rotationXYZ.x % 360.0f;
         rotationXYZ.y = rotationXYZ.y % 360.0f;
         rotationXYZ.z = rotationXYZ.z % 360.0f;
 
-        cubeRotation.rotateXYZ( (float) Math.toRadians(rotationXYZ.x), (float) Math.toRadians(rotationXYZ.y), (float) Math.toRadians(rotationXYZ.z));
+        cubeRotation.rotateXYZ((float) Math.toRadians(rotationXYZ.x),
+                               (float) Math.toRadians(rotationXYZ.y),
+                               (float) Math.toRadians(rotationXYZ.z));
         cubeRock3.setRotation(cubeRotation);
 
 
@@ -154,89 +157,7 @@ public class DummyGame implements IGameLogic {
 
     @Override
     public void input(Window window, MouseInput mouseInput, KeyboardInput keyboardInput) {
-        sceneChanged = false;
-        cameraInc.set(0, 0, 0);
-        cameraRot.set(0, 0, 0);
-
-        //----KEYBOARD----//
-
-        //move forward W/backward S
-        if (keyboardInput.isKeyDown(GLFW_KEY_W)) {
-            sceneChanged = true;
-            cameraInc.z = -1;
-        } else if (keyboardInput.isKeyDown(GLFW_KEY_S)) {
-            sceneChanged = true;
-            cameraInc.z = 1;
-        }
-        //move left A/right D
-        if (keyboardInput.isKeyDown(GLFW_KEY_A)) {
-            sceneChanged = true;
-            cameraInc.x = -1;
-        } else if (keyboardInput.isKeyDown(GLFW_KEY_D)) {
-            sceneChanged = true;
-            cameraInc.x = 1;
-        }
-        //move down Z/up X
-        if (keyboardInput.isKeyDown(GLFW_KEY_Z)) {
-            sceneChanged = true;
-            cameraInc.y = -1;
-        } else if (keyboardInput.isKeyDown(GLFW_KEY_X)) {
-            sceneChanged = true;
-            cameraInc.y = 1;
-        }
-
-        //rotate camera
-        if (keyboardInput.isKeyDown(GLFW_KEY_Q)) {
-            sceneChanged = true;
-            cameraRot.y = -1;
-        } else if (keyboardInput.isKeyDown(GLFW_KEY_E)) {
-            sceneChanged = true;
-            cameraRot.y = 1;
-        }
-
-
-        //move directional light
-        if (keyboardInput.isKeyDown(GLFW_KEY_LEFT)) {
-            sceneChanged = true;
-            angleInc -= 0.05f;
-        } else if (keyboardInput.isKeyDown(GLFW_KEY_RIGHT)) {
-            sceneChanged = true;
-            angleInc += 0.05f;
-        } else {
-            angleInc = 0;
-        }
-        //point light closer/farther
-        if (keyboardInput.isKeyDown(GLFW_KEY_UP)) {
-            sceneChanged = true;
-            pointLightPos.y += 0.5f;
-        } else if (keyboardInput.isKeyDown(GLFW_KEY_DOWN)) {
-            sceneChanged = true;
-            pointLightPos.y -= 0.5f;
-        }
-
-        //Quit
-        if (keyboardInput.isKeyReleased(GLFW_KEY_ESCAPE)) {
-            glfwSetWindowShouldClose(window.getWindowHandle(), true);
-        }
-
-        //----MOUSE----//
-
-        if (mouseInput.getScroll() != 0) {
-            if (mouseInput.getScroll() > 0) {
-                sceneChanged = true;
-                cameraInc.y = -1;
-            } else if (mouseInput.getScroll() < 0) {
-                sceneChanged = true;
-                cameraInc.y = 1;
-            }
-        }
-
-        if (mouseInput.isButtonDown(GLFW_MOUSE_BUTTON_MIDDLE)) {
-            cameraInc.x = mouseInput.getDeltaPosition().x;
-            cameraInc.z = mouseInput.getDeltaPosition().y;
-            cameraInc.mul(-DRAG_MOUSE_SENSITIVITY);
-        }
-
+        inputService.update(window, mouseInput, keyboardInput);
     }
 
     @Override
@@ -249,12 +170,17 @@ public class DummyGame implements IGameLogic {
 //        }
 
         // Update camera rotation
-        camera.moveRotation(cameraRot.x, cameraRot.y, cameraRot.z);
-
+        camera.moveRotation(inputService.getCameraRot().x,
+                            inputService.getCameraRot().y,
+                            inputService.getCameraRot().z);
         // Update camera position
-        camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
+        camera.movePosition(inputService.getCameraInc().x * CAMERA_POS_STEP,
+                            inputService.getCameraInc().y * CAMERA_POS_STEP,
+                            inputService.getCameraInc().z * CAMERA_POS_STEP);
 
-        lightAngle += angleInc;
+        pointLightPos.set(inputService.getPointLightPos());
+
+        lightAngle += inputService.getAngleInc();
         if (lightAngle < 0) {
             lightAngle = 0;
         } else if (lightAngle > 180) {
