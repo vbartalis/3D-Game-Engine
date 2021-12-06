@@ -1,18 +1,24 @@
 package vbartalis.game.input;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector3f;
 import vbartalis.engine.Window;
+import vbartalis.engine.graph.Camera;
 import vbartalis.engine.input.KeyboardInput;
 import vbartalis.engine.input.MouseInput;
+import vbartalis.engine.items.GameItem;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
 
+@Slf4j
 public class InputService {
 
     private static final float MOUSE_SENSITIVITY = 0.2f;
     private static final float DRAG_MOUSE_SENSITIVITY = 0.1f;
+
+    private MouseBoxSelectionDetector selectDetector;
 
     @Getter
     private boolean sceneChanged;
@@ -32,16 +38,17 @@ public class InputService {
 
         pointLightPos = new Vector3f(0.0f, 25.0f, 0.0f);
         angleInc = 0;
+        selectDetector = new MouseBoxSelectionDetector();
 
     }
 
-    public void update(Window window, MouseInput mouseInput, KeyboardInput keyboardInput) {
+    public void update(Window window, MouseInput mouseInput, KeyboardInput keyboardInput, Camera camera, GameItem[] gameItems) {
         sceneChanged = false;
         cameraInc.set(0, 0, 0);
         cameraRot.set(0, 0, 0);
 
         handleKeyboardInput(window, keyboardInput);
-        handleMouseInput(window, mouseInput);
+        handleMouseInput(window, mouseInput, camera,gameItems);
     }
 
     public void handleKeyboardInput(Window window, KeyboardInput keyboardInput) {
@@ -104,7 +111,7 @@ public class InputService {
         }
     }
 
-    public void handleMouseInput(Window window, MouseInput mouseInput) {
+    public void handleMouseInput(Window window, MouseInput mouseInput, Camera camera, GameItem[] gameItems) {
         if (mouseInput.getScroll() != 0) {
             if (mouseInput.getScroll() > 0) {
                 sceneChanged = true;
@@ -119,6 +126,11 @@ public class InputService {
             cameraInc.x = mouseInput.getDeltaPosition().x;
             cameraInc.z = mouseInput.getDeltaPosition().y;
             cameraInc.mul(-DRAG_MOUSE_SENSITIVITY);
+        }
+
+        if (mouseInput.isButtonPressed(GLFW_MOUSE_BUTTON_LEFT)
+                && this.selectDetector.selectGameItem(gameItems,window,mouseInput.getCurrentPosition(), camera)) {
+            log.info("selected");
         }
     }
 }

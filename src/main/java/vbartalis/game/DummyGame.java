@@ -20,6 +20,9 @@ import vbartalis.engine.items.SkyBox;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
 import vbartalis.game.input.InputService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 @Slf4j
@@ -50,6 +53,9 @@ public class DummyGame implements IGameLogic {
     private Vector3f pointLightPos;
 
     private final InputService inputService;
+
+    private ArrayList<GameItem> selectebleGameItems;
+    private ArrayList<GameItem> gameItems;
 
     public DummyGame() {
         renderer = new Renderer();
@@ -106,7 +112,13 @@ public class DummyGame implements IGameLogic {
 //        terrain.setScale(100.0f);
         terrain.setScale(10.0f);
 
-        scene.setGameItems(new GameItem[]{cubeRock1, cubeRock2, cubeRock3, terrain});
+//        gameItems = new GameItem[]{cubeRock1, cubeRock2, cubeRock3, terrain};
+//        selectebleGameItems = new GameItem[]{cubeRock1, cubeRock2, cubeRock3};
+        selectebleGameItems = new ArrayList<GameItem>(List.of(cubeRock1, cubeRock2, cubeRock3));
+        gameItems = new ArrayList<GameItem>(List.of(terrain));
+        gameItems.addAll(selectebleGameItems);
+
+        scene.setGameItems(gameItems.toArray(new GameItem[0]));
 
         // Shadows
         scene.setRenderShadows(true);
@@ -157,7 +169,7 @@ public class DummyGame implements IGameLogic {
 
     @Override
     public void input(Window window, MouseInput mouseInput, KeyboardInput keyboardInput) {
-        inputService.update(window, mouseInput, keyboardInput);
+        inputService.update(window, mouseInput, keyboardInput, camera, selectebleGameItems.toArray(new GameItem[0]));
     }
 
     @Override
