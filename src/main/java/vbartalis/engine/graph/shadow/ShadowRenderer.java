@@ -115,7 +115,7 @@ public class ShadowRenderer {
         depthShaderProgram.setUniform("isInstanced", 0);
 
         // Render each mesh with the associated game Items
-        Map<Mesh, List<GameItem>> mapMeshes = scene.getGameMeshes();
+        Map<Mesh, List<GameItem>> mapMeshes = scene.getMeshMap();
         for (Mesh mesh : mapMeshes.keySet()) {
             mesh.renderList(mapMeshes.get(mesh), (GameItem gameItem) -> {
                 Matrix4f modelMatrix = transformation.buildModelMatrix(gameItem);
@@ -134,7 +134,7 @@ public class ShadowRenderer {
         depthShaderProgram.setUniform("isInstanced", 1);
 
         // Render each mesh with the associated game Items
-        Map<InstancedMesh, List<GameItem>> mapMeshes = scene.getGameInstancedMeshes();
+        Map<InstancedMesh, List<GameItem>> mapMeshes = scene.getInstancedMeshMap();
         for (InstancedMesh mesh : mapMeshes.keySet()) {
             filteredItems.clear();
             for (GameItem gameItem : mapMeshes.get(mesh)) {

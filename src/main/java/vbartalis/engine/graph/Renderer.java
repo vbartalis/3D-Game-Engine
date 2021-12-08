@@ -12,7 +12,6 @@ import vbartalis.engine.graph.particles.IParticleEmitter;
 import vbartalis.engine.graph.shadow.ShadowCascade;
 import vbartalis.engine.graph.shadow.ShadowRenderer;
 import vbartalis.engine.Window;
-import vbartalis.engine.graph.shadow.ShadowRenderer;
 import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SkyBox;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
@@ -90,8 +89,8 @@ public class Renderer {
 
         if (window.getOptions().frustumCulling) {
             frustumFilter.updateFrustum(window.getProjectionMatrix(), camera.getViewMatrix());
-            frustumFilter.filter(scene.getGameMeshes());
-            frustumFilter.filter(scene.getGameInstancedMeshes());
+            frustumFilter.filter(scene.getMeshMap());
+            frustumFilter.filter(scene.getInstancedMeshMap());
         }
 
         // Render depth map before view ports has been set up
@@ -512,7 +511,7 @@ public class Renderer {
         gBufferShaderProgram.setUniform("isInstanced", 0);
 
         // Render each mesh with the associated game Items
-        Map<Mesh, List<GameItem>> mapMeshes = scene.getGameMeshes();
+        Map<Mesh, List<GameItem>> mapMeshes = scene.getMeshMap();
         for (Mesh mesh : mapMeshes.keySet()) {
             gBufferShaderProgram.setUniform("material", mesh.getMaterial());
 
@@ -540,7 +539,7 @@ public class Renderer {
         gBufferShaderProgram.setUniform("isInstanced", 1);
 
         // Render each mesh with the associated game Items
-        Map<InstancedMesh, List<GameItem>> mapMeshes = scene.getGameInstancedMeshes();
+        Map<InstancedMesh, List<GameItem>> mapMeshes = scene.getInstancedMeshMap();
         for (InstancedMesh mesh : mapMeshes.keySet()) {
             Texture text = mesh.getMaterial().getTexture();
             if (text != null) {
