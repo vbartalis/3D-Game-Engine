@@ -3,6 +3,7 @@ package vbartalis.engine.graph;
 import org.joml.Matrix4f;
 import org.lwjgl.system.MemoryUtil;
 import vbartalis.engine.items.GameItem;
+import vbartalis.engine.items.SelectableItem;
 
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -125,7 +126,13 @@ public class InstancedMesh extends Mesh {
 
             // Selected data or scaling for billboard
             int buffPos = InstancedMesh.INSTANCE_SIZE_FLOATS * i + InstancedMesh.MATRIX_SIZE_FLOATS + 2;
-            this.instanceDataBuffer.put(buffPos, billBoard ? gameItem.getScale() : gameItem.isSelected() ? 1 : 0);
+
+            //todo
+            if (gameItem instanceof SelectableItem){
+            this.instanceDataBuffer.put(buffPos, billBoard ? gameItem.getScale() : ((SelectableItem) gameItem).isSelected() ? 1 : 0);
+            } else {
+            this.instanceDataBuffer.put(buffPos, billBoard ? gameItem.getScale() : 0);
+            }
 
             i++;
         }

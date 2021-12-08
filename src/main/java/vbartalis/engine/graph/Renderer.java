@@ -13,6 +13,7 @@ import vbartalis.engine.graph.shadow.ShadowCascade;
 import vbartalis.engine.graph.shadow.ShadowRenderer;
 import vbartalis.engine.Window;
 import vbartalis.engine.items.GameItem;
+import vbartalis.engine.items.SelectableItem;
 import vbartalis.engine.items.SkyBox;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
 
@@ -522,11 +523,14 @@ public class Renderer {
             }
 
             mesh.renderList(mapMeshes.get(mesh), (GameItem gameItem) -> {
-                gBufferShaderProgram.setUniform("selectedNonInstanced", gameItem.isSelected() ? 1.0f : 0.0f);
+                if (gameItem instanceof SelectableItem selectableItem) {
+                gBufferShaderProgram.setUniform("selectedNonInstanced", selectableItem.isSelected() ? 1.0f : 0.0f);
+                } else {
+                    gBufferShaderProgram.setUniform("selectedNonInstanced", 0.0f);
+                }
                 Matrix4f modelMatrix = transformation.buildModelMatrix(gameItem);
                 gBufferShaderProgram.setUniform("modelNonInstancedMatrix", modelMatrix);
-                if (gameItem instanceof AnimGameItem) {
-                    AnimGameItem animGameItem = (AnimGameItem) gameItem;
+                if (gameItem instanceof AnimGameItem animGameItem) {
                     AnimatedFrame frame = animGameItem.getCurrentAnimation().getCurrentFrame();
                     gBufferShaderProgram.setUniform("jointsMatrix", frame.getJointMatrices());
                 }

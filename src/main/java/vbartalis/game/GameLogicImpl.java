@@ -16,6 +16,7 @@ import vbartalis.engine.graph.weather.Fog;
 import vbartalis.engine.input.KeyboardInput;
 import vbartalis.engine.input.MouseInput;
 import vbartalis.engine.items.GameItem;
+import vbartalis.engine.items.SelectableItem;
 import vbartalis.engine.items.SkyBox;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
 import vbartalis.game.input.InputService;
@@ -26,7 +27,7 @@ import java.util.List;
 import static org.lwjgl.glfw.GLFW.*;
 
 @Slf4j
-public class DummyGame implements IGameLogic {
+public class GameLogicImpl implements IGameLogic {
 
     private static final float MOUSE_SENSITIVITY = 0.2f;
     private static final float DRAG_MOUSE_SENSITIVITY = 0.1f;
@@ -54,10 +55,11 @@ public class DummyGame implements IGameLogic {
 
     private final InputService inputService;
 
-    private ArrayList<GameItem> selectebleGameItems;
-    private ArrayList<GameItem> gameItems;
+    private ArrayList<SelectableItem> selectebleGameItems;
+    private ArrayList<GameItem> terrainItems;
+    private ArrayList<GameItem> gameItems = new ArrayList<>();
 
-    public DummyGame() {
+    public GameLogicImpl() {
         renderer = new Renderer();
         camera = new Camera();
         inputService = new InputService();
@@ -77,14 +79,14 @@ public class DummyGame implements IGameLogic {
 //        GameItem house = new GameItem(houseMesh);
 
         Mesh[] cubeRockMesh1 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
-        GameItem cubeRock1 = new GameItem(cubeRockMesh1);
+        SelectableItem cubeRock1 = new SelectableItem(cubeRockMesh1);
 
         Mesh[] cubeRockMesh2 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
-        GameItem cubeRock2 = new GameItem(cubeRockMesh2);
+        SelectableItem cubeRock2 = new SelectableItem(cubeRockMesh2);
         cubeRock2.setPosition(10.0f, 10.0f, 0.0f);
 
         Mesh[] cubeRockMesh3 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
-        GameItem cubeRock3 = new GameItem(cubeRockMesh3);
+        SelectableItem cubeRock3 = new SelectableItem(cubeRockMesh3);
         cubeRock3.setPosition(0.0f, 5.0f, 5.0f);
 
 
@@ -106,17 +108,23 @@ public class DummyGame implements IGameLogic {
 
 
 
+
+        Mesh[] cubeRockMesh4 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
+        SelectableItem cubeRock4 = new SelectableItem(cubeRockMesh3);
+        cubeRock4.setPosition(5.0f, 5.0f, 5.0f);
+
+        selectebleGameItems = new ArrayList<>(List.of(cubeRock1, cubeRock2, cubeRock3,cubeRock4));
+
+
 //        Mesh[] terrainMesh = StaticMeshesLoader.load("models/terrain/terrain.obj", "models/terrain");
         Mesh[] terrainMesh = StaticMeshesLoader.load("models/myterrain/MyTerrain2.obj", "models/myterrain");
         GameItem terrain = new GameItem(terrainMesh);
 //        terrain.setScale(100.0f);
         terrain.setScale(10.0f);
 
-//        gameItems = new GameItem[]{cubeRock1, cubeRock2, cubeRock3, terrain};
-//        selectebleGameItems = new GameItem[]{cubeRock1, cubeRock2, cubeRock3};
-        selectebleGameItems = new ArrayList<GameItem>(List.of(cubeRock1, cubeRock2, cubeRock3));
-        gameItems = new ArrayList<GameItem>(List.of(terrain));
+        terrainItems = new ArrayList<>(List.of(terrain));
         gameItems.addAll(selectebleGameItems);
+        gameItems.addAll(terrainItems);
 
         scene.setGameItems(gameItems.toArray(new GameItem[0]));
 
@@ -169,7 +177,7 @@ public class DummyGame implements IGameLogic {
 
     @Override
     public void input(Window window, MouseInput mouseInput, KeyboardInput keyboardInput) {
-        inputService.update(window, mouseInput, keyboardInput, camera, selectebleGameItems.toArray(new GameItem[0]));
+        inputService.update(window, mouseInput, keyboardInput, camera, selectebleGameItems.toArray(new SelectableItem[0]));
     }
 
     @Override

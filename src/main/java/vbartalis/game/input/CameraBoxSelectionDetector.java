@@ -5,6 +5,7 @@ import org.joml.Vector3f;
 import org.joml.primitives.Intersectionf;
 import vbartalis.engine.graph.Camera;
 import vbartalis.engine.items.GameItem;
+import vbartalis.engine.items.SelectableItem;
 
 public class CameraBoxSelectionDetector {
 
@@ -23,17 +24,17 @@ public class CameraBoxSelectionDetector {
         nearFar = new Vector2f();
     }
 
-    public void selectGameItem(GameItem[] gameItems, Camera camera) {
+    public void selectGameItem(SelectableItem[] gameItems, Camera camera) {
         dir = camera.getViewMatrix().positiveZ(dir).negate();
         selectGameItem(gameItems, camera.getPosition(), dir);
     }
     
-    protected boolean selectGameItem(GameItem[] gameItems, Vector3f center, Vector3f dir) {
+    protected boolean selectGameItem(SelectableItem[] gameItems, Vector3f center, Vector3f dir) {
         boolean selected = false;
-        GameItem selectedGameItem = null;
+        SelectableItem selectedGameItem = null;
         float closestDistance = Float.POSITIVE_INFINITY;
 
-        for (GameItem gameItem : gameItems) {
+        for (SelectableItem gameItem : gameItems) {
             gameItem.setSelected(false);
             min.set(gameItem.getPosition());
             max.set(gameItem.getPosition());

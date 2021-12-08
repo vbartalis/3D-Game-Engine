@@ -4,6 +4,7 @@ import org.joml.*;
 import vbartalis.engine.Window;
 import vbartalis.engine.graph.Camera;
 import vbartalis.engine.items.GameItem;
+import vbartalis.engine.items.SelectableItem;
 
 public class MouseBoxSelectionDetector extends CameraBoxSelectionDetector {
 
@@ -23,7 +24,7 @@ public class MouseBoxSelectionDetector extends CameraBoxSelectionDetector {
         tmpVec = new Vector4f();
     }
     
-    public boolean selectGameItem(GameItem[] gameItems, Window window, Vector2f mousePos, Camera camera) {
+    public boolean selectGameItem(SelectableItem[] gameItems, Window window, Vector2f mousePos, Camera camera) {
         // Transform mouse coordinates into normalized spaze [-1, 1]
         int wdwWitdh = window.getWidth();
         int wdwHeight = window.getHeight();

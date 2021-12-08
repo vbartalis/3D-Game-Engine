@@ -8,6 +8,7 @@ import vbartalis.engine.graph.Camera;
 import vbartalis.engine.input.KeyboardInput;
 import vbartalis.engine.input.MouseInput;
 import vbartalis.engine.items.GameItem;
+import vbartalis.engine.items.SelectableItem;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
@@ -42,7 +43,7 @@ public class InputService {
 
     }
 
-    public void update(Window window, MouseInput mouseInput, KeyboardInput keyboardInput, Camera camera, GameItem[] gameItems) {
+    public void update(Window window, MouseInput mouseInput, KeyboardInput keyboardInput, Camera camera, SelectableItem[] gameItems) {
         sceneChanged = false;
         cameraInc.set(0, 0, 0);
         cameraRot.set(0, 0, 0);
@@ -111,7 +112,7 @@ public class InputService {
         }
     }
 
-    public void handleMouseInput(Window window, MouseInput mouseInput, Camera camera, GameItem[] gameItems) {
+    public void handleMouseInput(Window window, MouseInput mouseInput, Camera camera, SelectableItem[] gameItems) {
         if (mouseInput.getScroll() != 0) {
             if (mouseInput.getScroll() > 0) {
                 sceneChanged = true;

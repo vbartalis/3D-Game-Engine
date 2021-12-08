@@ -11,7 +11,7 @@ public class Main {
 
 		try {
 			boolean vSync = true;
-			IGameLogic gameLogic = new DummyGame();
+			IGameLogic gameLogic = new GameLogicImpl();
 			Window.WindowOptions opts = new Window.WindowOptions();
 			opts.cullFace = false;
 			opts.showFps = true;
