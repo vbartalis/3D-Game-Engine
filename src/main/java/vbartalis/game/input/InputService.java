@@ -17,21 +17,22 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
 public class InputService {
 
     private static final float MOUSE_SENSITIVITY = 0.2f;
+    private static final float MOUSE_ZOOM_SENSITIVITY = 5.0f;
     private static final float DRAG_MOUSE_SENSITIVITY = 0.1f;
 
-    private MouseBoxSelectionDetector selectDetector;
+    private final MouseBoxSelectionDetector selectDetector;
 
     @Getter
     private boolean sceneChanged;
     @Getter
-    private Vector3f cameraInc;
+    private final Vector3f cameraInc;
     @Getter
-    private Vector3f cameraRot;
+    private final Vector3f cameraRot;
 
     @Getter
     private float angleInc;
     @Getter
-    private Vector3f pointLightPos;
+    private final Vector3f pointLightPos;
 
     public InputService() {
         cameraInc = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -116,10 +117,10 @@ public class InputService {
         if (mouseInput.getScroll() != 0) {
             if (mouseInput.getScroll() > 0) {
                 sceneChanged = true;
-                cameraInc.y = -1;
+                cameraInc.y = -1 * MOUSE_ZOOM_SENSITIVITY;
             } else if (mouseInput.getScroll() < 0) {
                 sceneChanged = true;
-                cameraInc.y = 1;
+                cameraInc.y = 1  * MOUSE_ZOOM_SENSITIVITY;
             }
         }
 
