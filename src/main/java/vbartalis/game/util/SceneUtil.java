@@ -39,7 +39,6 @@ public class SceneUtil {
     public void init() throws Exception {
         scene = new Scene();
 
-
 //        Mesh[] houseMesh = StaticMeshesLoader.load("models/house/house.obj", "models/house");
 //        GameItem house = new GameItem(houseMesh);
 
@@ -53,7 +52,6 @@ public class SceneUtil {
         Mesh[] cubeRockMesh3 = StaticMeshesLoader.load("models/cube/CubeRock.obj", "models/cube");
         SelectableItem cubeRock3 = new SelectableItem(cubeRockMesh3);
         cubeRock3.setPosition(0.0f, 5.0f, 5.0f);
-
 
         Quaternionf cubeRotation = new Quaternionf();
         cubeRotation.x = 0f;
@@ -70,8 +68,6 @@ public class SceneUtil {
                 (float) Math.toRadians(rotationXYZ.y),
                 (float) Math.toRadians(rotationXYZ.z));
         cubeRock3.setRotation(cubeRotation);
-
-
 
         SelectableItem cubeRock4 = new SelectableItem(cubeRockMesh3);
         cubeRock4.setPosition(5.0f, 5.0f, 5.0f);
@@ -107,9 +103,6 @@ public class SceneUtil {
 
         // Setup Lights
         setupLights();
-
-
-
     }
 
     private void setupLights() {

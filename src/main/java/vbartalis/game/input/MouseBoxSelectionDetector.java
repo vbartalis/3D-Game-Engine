@@ -1,9 +1,11 @@
 package vbartalis.game.input;
 
-import org.joml.*;
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import vbartalis.engine.Window;
 import vbartalis.engine.graph.Camera;
-import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SelectableItem;
 
 public class MouseBoxSelectionDetector extends CameraBoxSelectionDetector {

@@ -1,38 +1,18 @@
 package vbartalis.game;
 
 import lombok.extern.slf4j.Slf4j;
-import org.joml.Quaternionf;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
-import org.lwjgl.system.MathUtil;
-import vbartalis.engine.*;
-import vbartalis.engine.graph.Camera;
-import vbartalis.engine.graph.Mesh;
+import vbartalis.engine.IGameLogic;
+import vbartalis.engine.Window;
 import vbartalis.engine.graph.Renderer;
-import vbartalis.engine.graph.lights.DirectionalLight;
-import vbartalis.engine.graph.lights.PointLight;
-import vbartalis.engine.graph.weather.Fog;
 import vbartalis.engine.input.KeyboardInput;
 import vbartalis.engine.input.MouseInput;
-import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SelectableItem;
-import vbartalis.engine.items.SkyBox;
-import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
 import vbartalis.game.input.InputService;
 import vbartalis.game.util.CameraUtil;
 import vbartalis.game.util.SceneUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.lwjgl.glfw.GLFW.*;
-
 @Slf4j
 public class GameLogicImpl implements IGameLogic {
-
-    private static final float MOUSE_SENSITIVITY = 0.2f;
-    private static final float DRAG_MOUSE_SENSITIVITY = 0.1f;
 
     private final Renderer renderer;
 
@@ -76,13 +56,6 @@ public class GameLogicImpl implements IGameLogic {
 
     @Override
     public void update(float interval, vbartalis.engine.input.MouseInput mouseInput, Window window) {
-//        if (mouseInput.isRightButtonPressed()) {
-//            // Update camera based on mouse
-//            Vector2f rotVec = mouseInput.getDisplVec();
-//            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
-//            sceneChanged = true;
-//        }
-
         sceneUtil.update(inputService);
         cameraUtil.update(inputService);
     }

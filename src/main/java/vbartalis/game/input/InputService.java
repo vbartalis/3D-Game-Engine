@@ -7,11 +7,9 @@ import vbartalis.engine.Window;
 import vbartalis.engine.graph.Camera;
 import vbartalis.engine.input.KeyboardInput;
 import vbartalis.engine.input.MouseInput;
-import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SelectableItem;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
 
 @Slf4j
 public class InputService {
@@ -134,5 +132,12 @@ public class InputService {
                 && this.selectDetector.selectGameItem(gameItems,window,mouseInput.getCurrentPosition(), camera)) {
             log.info("selected");
         }
+
+        //        if (mouseInput.isRightButtonPressed()) {
+//            // Update camera based on mouse
+//            Vector2f rotVec = mouseInput.getDisplVec();
+//            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
+//            sceneChanged = true;
+//        }
     }
 }

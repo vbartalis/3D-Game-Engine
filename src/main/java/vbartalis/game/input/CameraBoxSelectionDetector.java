@@ -4,7 +4,6 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.primitives.Intersectionf;
 import vbartalis.engine.graph.Camera;
-import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SelectableItem;
 
 public class CameraBoxSelectionDetector {

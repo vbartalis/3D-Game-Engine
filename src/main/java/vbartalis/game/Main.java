@@ -1,6 +1,5 @@
 package vbartalis.game;
 
-
 import vbartalis.engine.GameEngine;
 import vbartalis.engine.IGameLogic;
 import vbartalis.engine.Window;
