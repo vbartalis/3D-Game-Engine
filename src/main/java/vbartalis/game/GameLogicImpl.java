@@ -61,7 +61,10 @@ public class GameLogicImpl implements IGameLogic {
 
     @Override
     public void cleanup() {
+
         rendererView.cleanup();
+        //todo
+        sceneModel.save();
         sceneModel.cleanup();
     }
 }

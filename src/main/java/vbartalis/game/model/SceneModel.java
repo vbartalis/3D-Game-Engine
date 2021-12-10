@@ -12,7 +12,9 @@ import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SelectableItem;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
 import vbartalis.game.control.InputControl;
+import vbartalis.game.model.service.SceneLoader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,6 @@ public class SceneModel {
 
     @Getter
     private Scene scene;
-
     @Getter
     private ArrayList<SelectableItem> selectableItems = new ArrayList<>();
     @Getter
@@ -148,6 +149,15 @@ public class SceneModel {
 
     public void cleanup() {
         scene.cleanup();
+    }
+
+    public void save() {
+        SceneLoader sceneLoader = new SceneLoader();
+        try {
+            sceneLoader.saveScene(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

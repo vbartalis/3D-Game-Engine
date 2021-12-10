@@ -19,6 +19,7 @@ public class CameraModel {
         camera.getPosition().x = -17.0f;
         camera.getPosition().y =  17.0f;
         camera.getPosition().z = -30.0f;
+
 //        camera.getRotation().x = 20.0f;
         camera.getRotation().x = 45.0f;
         camera.getRotation().y = 140.f;
@@ -26,13 +27,17 @@ public class CameraModel {
 
     public void update(InputControl inputService) {
         // Update camera rotation
-        camera.moveRotation(inputService.getCameraRot().x,
+        camera.moveRotation(
+                inputService.getCameraRot().x,
                 inputService.getCameraRot().y,
-                inputService.getCameraRot().z);
+                inputService.getCameraRot().z
+        );
         // Update camera position
-        camera.movePosition(inputService.getCameraInc().x * CAMERA_POS_STEP,
+        camera.movePosition(
+                inputService.getCameraInc().x * CAMERA_POS_STEP,
                 inputService.getCameraInc().y * CAMERA_POS_STEP,
-                inputService.getCameraInc().z * CAMERA_POS_STEP);
+                inputService.getCameraInc().z * CAMERA_POS_STEP
+        );
 
         // Update view matrix
         camera.updateViewMatrix();
