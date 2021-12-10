@@ -1,17 +1,17 @@
-package vbartalis.game.util;
+package vbartalis.game.model;
 
 import lombok.Getter;
 import vbartalis.engine.graph.Camera;
-import vbartalis.game.input.InputService;
+import vbartalis.game.control.InputControl;
 
-public class CameraUtil {
+public class CameraModel {
 
     @Getter
     private final Camera camera;
 
     private static final float CAMERA_POS_STEP = 0.40f;
 
-    public CameraUtil() {
+    public CameraModel() {
         this.camera = new Camera();
     }
 
@@ -24,7 +24,7 @@ public class CameraUtil {
         camera.getRotation().y = 140.f;
     }
 
-    public void update(InputService inputService) {
+    public void update(InputControl inputService) {
         // Update camera rotation
         camera.moveRotation(inputService.getCameraRot().x,
                 inputService.getCameraRot().y,

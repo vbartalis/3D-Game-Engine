@@ -1,4 +1,4 @@
-package vbartalis.game.input;
+package vbartalis.game.control.service;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -31,8 +31,8 @@ public class MouseBoxSelectionDetector extends CameraBoxSelectionDetector {
         int wdwWitdh = window.getWidth();
         int wdwHeight = window.getHeight();
         
-        float x = (float)(2 * mousePos.x) / (float)wdwWitdh - 1.0f;
-        float y = 1.0f - (float)(2 * mousePos.y) / (float)wdwHeight;
+        float x = (2 * mousePos.x) / (float)wdwWitdh - 1.0f;
+        float y = 1.0f - (2 * mousePos.y) / (float)wdwHeight;
         float z = -1.0f;
 
         invProjectionMatrix.set(window.getProjectionMatrix());

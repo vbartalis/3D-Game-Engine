@@ -1,4 +1,4 @@
-package vbartalis.game.util;
+package vbartalis.game.model;
 
 import lombok.Getter;
 import org.joml.Quaternionf;
@@ -11,12 +11,12 @@ import vbartalis.engine.graph.lights.PointLight;
 import vbartalis.engine.items.GameItem;
 import vbartalis.engine.items.SelectableItem;
 import vbartalis.engine.loaders.assimp.StaticMeshesLoader;
-import vbartalis.game.input.InputService;
+import vbartalis.game.control.InputControl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SceneUtil {
+public class SceneModel {
 
     @Getter
     private Scene scene;
@@ -32,7 +32,7 @@ public class SceneUtil {
 
     private float lightAngle;
 
-    public SceneUtil() {
+    public SceneModel() {
         lightAngle = 90;
     }
 
@@ -127,7 +127,7 @@ public class SceneUtil {
         sceneLight.setPointLightList( new PointLight[] {pointLight});
     }
 
-    public void update(InputService inputService) {
+    public void update(InputControl inputService) {
 
         pointLightPos.set(inputService.getPointLightPos());
 

@@ -1,4 +1,4 @@
-package vbartalis.game.input;
+package vbartalis.game.control.service;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;

@@ -1,4 +1,4 @@
-package vbartalis.game.input;
+package vbartalis.game.control;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,11 +8,12 @@ import vbartalis.engine.graph.Camera;
 import vbartalis.engine.input.KeyboardInput;
 import vbartalis.engine.input.MouseInput;
 import vbartalis.engine.items.SelectableItem;
+import vbartalis.game.control.service.MouseBoxSelectionDetector;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 @Slf4j
-public class InputService {
+public class InputControl {
 
     private static final float MOUSE_SENSITIVITY = 0.2f;
     private static final float MOUSE_ZOOM_SENSITIVITY = 5.0f;
@@ -32,7 +33,7 @@ public class InputService {
     @Getter
     private final Vector3f pointLightPos;
 
-    public InputService() {
+    public InputControl() {
         cameraInc = new Vector3f(0.0f, 0.0f, 0.0f);
         cameraRot = new Vector3f(0.0f, 0.0f, 0.0f);
 
