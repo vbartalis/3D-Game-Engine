@@ -1,0 +1,145 @@
+repo_name: vbartalis/3D-Game-Engine
+report_id: 389d8bee2abc3bc320628b7488d432c1
+version: 0.1
+repo_type: Public
+timestamp: '2024-07-23T08:08:16+00:00'
+requested_by: vbartalis
+provider: github
+branch: master
+detected_tools_count: 9
+tools:
+- name: GLSL
+  description: A high-level C-style language
+  website_url: https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/6548/default_a66025fbe8f221c489bdaac3a99d84e5f138cbbd.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine
+  detection_source: Repo Metadata
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine
+  detection_source: Repo Metadata
+- name: SLF4J
+  description: Simple logging facade for Java
+  website_url: http://slf4j.org/
+  open_source: false
+  hosted_saas: false
+  category: Monitoring
+  sub_category: Log Management
+  image_url: https://img.stackshare.io/service/2805/05518ecaa42841e834421e9d6987b04f_400x400.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: vbartalis
+  last_updated_on: 2021-08-27 08:06:52.000000000 Z
+- name: com.fasterxml.jackson.core:jackson-databind
+  description: 'General data-binding functionality for Jackson: works on core streaming
+    API'
+  version: 2.13.0
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: vbartalis
+  last_updated_on: 2021-12-10 21:26:04.000000000 Z
+  vulnerabilities:
+  - name: Uncontrolled Resource Consumption in FasterXML jackson-databind
+    cve_id: CVE-2022-42004
+    cve_url: https://github.com/advisories/GHSA-rgv9-q543-rqg4
+    detected_date: Oct 5
+    severity: high
+    first_patched: 2.13.4
+  - name: Uncontrolled Resource Consumption in Jackson-databind
+    cve_id: CVE-2022-42003
+    cve_url: https://github.com/advisories/GHSA-jjjh-jjxp-wpff
+    detected_date: Oct 5
+    severity: high
+    first_patched: 2.13.4.2
+  - name: jackson-databind possible Denial of Service if using JDK serialization to
+      serialize JsonNode
+    cve_id: CVE-2021-46877
+    cve_url: https://github.com/advisories/GHSA-3x8x-79m2-3w2w
+    detected_date: Mar 21
+    severity: high
+    first_patched: 2.13.1
+  - name: Deeply nested json in jackson-databind
+    cve_id: CVE-2020-36518
+    cve_url: https://github.com/advisories/GHSA-57j2-w4cx-62h2
+    detected_date: Mar 23
+    severity: high
+    first_patched: 2.13.2.1
+- name: org.lwjgl:lwjgl
+  description: LWJGL
+  version: 3.2.3
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: vbartalis
+  last_updated_on: 2021-12-06 19:38:58.000000000 Z
+- name: org.projectlombok:lombok
+  description: 'Spice up your java: Automatic Resource Management'
+  version: 1.18.20
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: vbartalis
+  last_updated_on: 2021-12-06 19:38:58.000000000 Z
+- name: org.slf4j:slf4j-api
+  description: The slf4j API
+  version: 1.7.30
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: vbartalis
+  last_updated_on: 2021-12-06 19:38:58.000000000 Z
+- name: org.slf4j:slf4j-simple
+  description: SLF4J Simple binding
+  version: 1.7.30
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/vbartalis/3D-Game-Engine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: vbartalis
+  last_updated_on: 2021-12-06 19:38:58.000000000 Z
